@@ -1,0 +1,1512 @@
+{
+  "_meta": {
+    "description": "Shared test vectors for the JavaScript and Python implementations: both must agree on every entry. 'valid': real registered identifiers; normalise == company_number, validate ok, raw_id == raw_id. 'invalid': validate not ok. 'advisory' (DK, HR MBS, SK): the check digit is wrong but the number is still accepted, with check_digit 'advisory_bad', because the register itself has genuine numbers that fail it. 'normalization': normalise(input) == company_number. 'vat': vat_to_company_number(cc, input) == expected (null: no company number can be derived). US is shape-only. Every input is ASCII.",
+    "generated": "2026-09-29"
+  },
+  "FI": {
+    "valid": [
+      {
+        "input": "0112038-9",
+        "company": "Nokia Oyj",
+        "source": "PRH/YTJ business register (avoindata.prh.fi), mirrored at ytj.fi and proff.fi",
+        "company_number": "0112038-9",
+        "raw_id": 1120389
+      },
+      {
+        "input": "1927400-1",
+        "company": "KONE Oyj",
+        "source": "proff.fi (PRH/YTJ mirror)",
+        "company_number": "1927400-1",
+        "raw_id": 19274001
+      },
+      {
+        "input": "1041090-0",
+        "company": "UPM-Kymmene Oyj",
+        "source": "UPM AGM minutes (upm.com, states 'Y-tunnus 1041090-0'); proff.fi",
+        "company_number": "1041090-0",
+        "raw_id": 10410900
+      },
+      {
+        "input": "1039050-8",
+        "company": "Stora Enso Oyj",
+        "source": "PRH/YTJ official lookup: tietopalvelu.ytj.fi/yritys/1039050-8",
+        "company_number": "1039050-8",
+        "raw_id": 10390508
+      },
+      {
+        "input": "0128631-1",
+        "company": "Wartsila Oyj Abp",
+        "source": "proff.fi / asiakastieto.fi (PRH/YTJ mirrors)",
+        "company_number": "0128631-1",
+        "raw_id": 1286311
+      },
+      {
+        "input": "1852302-9",
+        "company": "Neste Oyj",
+        "source": "proff.fi (PRH/YTJ mirror)",
+        "company_number": "1852302-9",
+        "raw_id": 18523029
+      },
+      {
+        "input": "1463611-4",
+        "company": "Fortum Oyj",
+        "source": "Fortum investor PDF (fortum.com, states 'Y-tunnus 1463611-4'); proff.fi",
+        "company_number": "1463611-4",
+        "raw_id": 14636114
+      },
+      {
+        "input": "0142213-3",
+        "company": "Sampo Oyj",
+        "source": "proff.fi (PRH/YTJ mirror)",
+        "company_number": "0142213-3",
+        "raw_id": 1422133
+      },
+      {
+        "input": "0116510-6",
+        "company": "Elisa Oyj",
+        "source": "Elisa terms-of-service PDF (elisa.fi, states 'Y-tunnus 0116510-6'); finder.fi",
+        "company_number": "0116510-6",
+        "raw_id": 1165106
+      },
+      {
+        "input": "0109862-8",
+        "company": "Kesko Oyj",
+        "source": "proff.fi (PRH/YTJ mirror)",
+        "company_number": "0109862-8",
+        "raw_id": 1098628
+      }
+    ],
+    "invalid": [
+      {
+        "input": "0112038-8",
+        "reason": "bad_check_digit",
+        "note": "Nokia with the check digit off by one"
+      },
+      {
+        "input": "11203-8",
+        "reason": "wrong_length",
+        "note": "5-digit body, too short even for the legacy 6-digit form"
+      },
+      {
+        "input": "011203A-9",
+        "reason": "letters",
+        "note": "letter in place of a digit"
+      },
+      {
+        "input": "0000006-0",
+        "reason": "bad_check_digit",
+        "note": "mod-11 remainder 1: this ordinal is never issued a check digit, so no check digit makes it valid"
+      },
+      {
+        "input": "01120389-1",
+        "reason": "wrong_length",
+        "note": "9-digit body, too long"
+      },
+      {
+        "input": "011203²-9",
+        "reason": "non_ascii_digit",
+        "note": "superscript two in place of a digit: Python's str.isdigit() accepts it, so the Python port checks for ASCII 0-9 explicitly"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "0112038 9",
+        "company_number": "0112038-9"
+      },
+      {
+        "input": "01120389",
+        "company_number": "0112038-9"
+      },
+      {
+        "input": "112038-9",
+        "company_number": "0112038-9",
+        "note": "legacy 6-digit body, missing leading zero"
+      },
+      {
+        "input": "1039050-8",
+        "company_number": "1039050-8"
+      }
+    ],
+    "vat": [
+      {
+        "input": "FI01120389",
+        "expected": "0112038-9"
+      },
+      {
+        "input": "FI 01120389",
+        "expected": "0112038-9"
+      },
+      {
+        "input": "fi10390508",
+        "expected": "1039050-8"
+      },
+      {
+        "input": "DK24256790",
+        "expected": null,
+        "note": "another country's prefix maps to nothing under FI"
+      }
+    ]
+  },
+  "SE": {
+    "valid": [
+      {
+        "input": "556012-5790",
+        "company": "Volvo AB",
+        "source": "given / cross-checked (allabolag.se, footer of volvogroup.com)",
+        "company_number": "556012-5790",
+        "raw_id": 5560125790
+      },
+      {
+        "input": "556016-0680",
+        "company": "Telefonaktiebolaget LM Ericsson",
+        "source": "given / cross-checked (allabolag.se)",
+        "company_number": "556016-0680",
+        "raw_id": 5560160680
+      },
+      {
+        "input": "556042-7220",
+        "company": "H & M Hennes & Mauritz AB",
+        "source": "allabolag.se",
+        "company_number": "556042-7220",
+        "raw_id": 5560427220
+      },
+      {
+        "input": "556009-4178",
+        "company": "Aktiebolaget Electrolux",
+        "source": "bolagsfakta.se",
+        "company_number": "556009-4178",
+        "raw_id": 5560094178
+      },
+      {
+        "input": "556014-2720",
+        "company": "Atlas Copco AB",
+        "source": "allabolag.se / bolagsfakta.se",
+        "company_number": "556014-2720",
+        "raw_id": 5560142720
+      },
+      {
+        "input": "556000-3468",
+        "company": "Sandvik Aktiebolag",
+        "source": "allabolag.se",
+        "company_number": "556000-3468",
+        "raw_id": 5560003468
+      },
+      {
+        "input": "556000-4615",
+        "company": "Skanska AB",
+        "source": "allabolag.se",
+        "company_number": "556000-4615",
+        "raw_id": 5560004615
+      },
+      {
+        "input": "502017-7753",
+        "company": "Swedbank AB",
+        "source": "allabolag.se / bolagsfakta.se",
+        "company_number": "502017-7753",
+        "raw_id": 5020177753
+      },
+      {
+        "input": "502032-9081",
+        "company": "Skandinaviska Enskilda Banken AB",
+        "source": "allabolag.se",
+        "company_number": "502032-9081",
+        "raw_id": 5020329081
+      },
+      {
+        "input": "556587-8054",
+        "company": "Alfa Laval AB",
+        "source": "allabolag.se / bolagsfakta.se",
+        "company_number": "556587-8054",
+        "raw_id": 5565878054
+      }
+    ],
+    "invalid": [
+      {
+        "input": "556012-5791",
+        "reason": "bad_check_digit",
+        "note": "Volvo with the Luhn digit off by one"
+      },
+      {
+        "input": "55601-5790",
+        "reason": "wrong_length",
+        "note": "9 digits total"
+      },
+      {
+        "input": "55601A-5790",
+        "reason": "letters",
+        "note": "letter in place of a digit"
+      },
+      {
+        "input": "100000-0008",
+        "reason": "bad_third_digit",
+        "note": "3rd digit is 1 (below the legal-person floor of 2); Luhn passes, isolating the third-digit rule"
+      },
+      {
+        "input": "811228-9874",
+        "reason": "personnummer_shape",
+        "note": "synthetic but well-formed personnummer: 1981-12-28 birth date, Luhn-valid, 3rd digit is 1"
+      },
+      {
+        "input": "175560125790",
+        "reason": "wrong_prefix",
+        "note": "12 digits, but the optional prefix is 16, not 17. The core 5560125790 is Luhn-valid, so only the prefix rule rejects it"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "556012 5790",
+        "company_number": "556012-5790"
+      },
+      {
+        "input": "5560125790",
+        "company_number": "556012-5790"
+      },
+      {
+        "input": "165560125790",
+        "company_number": "556012-5790",
+        "note": "12-digit form with the '16' century-placeholder prefix"
+      },
+      {
+        "input": "556016.0680",
+        "company_number": "556016-0680"
+      }
+    ],
+    "vat": [
+      {
+        "input": "SE556012579001",
+        "expected": "556012-5790"
+      },
+      {
+        "input": "SE 556016068001",
+        "expected": "556016-0680"
+      },
+      {
+        "input": "SE556012579002",
+        "expected": null,
+        "note": "a Swedish VAT number ends in 01"
+      },
+      {
+        "input": "SE811228987401",
+        "expected": null,
+        "note": "a sole trader's VAT number is built on the personnummer (3rd digit 1): never a company_number"
+      }
+    ]
+  },
+  "BE": {
+    "valid": [
+      {
+        "input": "0417.497.106",
+        "company": "Anheuser-Busch InBev SA/NV",
+        "source": "given / cross-checked (companyweb.be)",
+        "company_number": "0417.497.106",
+        "raw_id": 417497106
+      },
+      {
+        "input": "0403.091.220",
+        "company": "Solvay SA/NV",
+        "source": "northdata.com (KBO/BCE mirror)",
+        "company_number": "0403.091.220",
+        "raw_id": 403091220
+      },
+      {
+        "input": "0403.053.608",
+        "company": "UCB SA/NV",
+        "source": "UCB annual accounts PDF (ucb.com, states 'BE 0403.053.608'); companyweb.be",
+        "company_number": "0403.053.608",
+        "raw_id": 403053608
+      },
+      {
+        "input": "0403.227.515",
+        "company": "KBC Group NV",
+        "source": "staatsbladmonitor.be (Belgian Official Gazette monitor); trendstop.knack.be",
+        "company_number": "0403.227.515",
+        "raw_id": 403227515
+      },
+      {
+        "input": "0202.239.951",
+        "company": "Proximus NV",
+        "source": "trendstop.knack.be / companyweb.be",
+        "company_number": "0202.239.951",
+        "raw_id": 202239951
+      },
+      {
+        "input": "0400.378.485",
+        "company": "Colruyt Group NV",
+        "source": "staatsbladmonitor.be / trendstop.knack.be",
+        "company_number": "0400.378.485",
+        "raw_id": 400378485
+      },
+      {
+        "input": "0214.596.464",
+        "company": "bpost NV",
+        "source": "staatsbladmonitor.be / companyweb.be",
+        "company_number": "0214.596.464",
+        "raw_id": 214596464
+      },
+      {
+        "input": "0401.574.852",
+        "company": "Umicore NV/SA",
+        "source": "companyweb.be and trendstop.knack.be (cross-confirmed)",
+        "company_number": "0401.574.852",
+        "raw_id": 401574852
+      },
+      {
+        "input": "0451.406.524",
+        "company": "Ageas SA/NV",
+        "source": "companyweb.be / trendstop.knack.be",
+        "company_number": "0451.406.524",
+        "raw_id": 451406524
+      },
+      {
+        "input": "0403.448.140",
+        "company": "D'Ieteren Group NV",
+        "source": "companyweb.be / staatsbladmonitor.be",
+        "company_number": "0403.448.140",
+        "raw_id": 403448140
+      }
+    ],
+    "invalid": [
+      {
+        "input": "0417.497.107",
+        "reason": "bad_check_digit",
+        "note": "AB InBev with the mod-97 pair off by one"
+      },
+      {
+        "input": "417.497.10",
+        "reason": "wrong_length",
+        "note": "8 digits total (a 9-digit form is read as a dropped leading zero; this is one shorter)"
+      },
+      {
+        "input": "041B.497.106",
+        "reason": "letters",
+        "note": "letter in place of a digit"
+      },
+      {
+        "input": "2417.497.106",
+        "reason": "bad_prefix",
+        "note": "must start with 0 or 1; this starts with 2"
+      },
+      {
+        "input": "0417.497.1066",
+        "reason": "wrong_length",
+        "note": "11 digits total"
+      },
+      {
+        "input": "2000.000.042",
+        "reason": "bad_prefix",
+        "note": "the mod-97 pair is right (97 - 20000000 mod 97 = 42), so only the 0-or-1 prefix rule rejects it"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "0417 497 106",
+        "company_number": "0417.497.106"
+      },
+      {
+        "input": "0417-497-106",
+        "company_number": "0417.497.106"
+      },
+      {
+        "input": "417497106",
+        "company_number": "0417.497.106",
+        "note": "leading zero dropped (e.g. by a spreadsheet)"
+      },
+      {
+        "input": "0403227515",
+        "company_number": "0403.227.515"
+      }
+    ],
+    "vat": [
+      {
+        "input": "BE0417497106",
+        "expected": "0417.497.106"
+      },
+      {
+        "input": "BE 0403.053.608",
+        "expected": "0403.053.608"
+      }
+    ]
+  },
+  "HR": {
+    "valid": [
+      {
+        "input": "080000604",
+        "company": "INA - Industrija nafte d.d.",
+        "source": "insolve.hr (sudski registar mirror); ina.hr company-info page",
+        "company_number": "080000604",
+        "raw_id": 80000604,
+        "oib": "27759560625"
+      },
+      {
+        "input": "080266256",
+        "company": "Hrvatski Telekom d.d.",
+        "source": "infobiz.fina.hr (FINA); companywall.hr",
+        "company_number": "080266256",
+        "raw_id": 80266256,
+        "oib": "81793146560"
+      },
+      {
+        "input": "010006549",
+        "company": "Podravka d.d.",
+        "source": "sudreg.pravosudje.hr (official court register search)",
+        "company_number": "010006549",
+        "raw_id": 10006549,
+        "oib": "18928523252"
+      },
+      {
+        "input": "080040936",
+        "company": "Koncar - Elektroindustrija d.d.",
+        "source": "infobiz.fina.hr (FINA)",
+        "company_number": "080040936",
+        "raw_id": 80040936,
+        "oib": "45050126417"
+      },
+      {
+        "input": "040001061",
+        "company": "Adris grupa d.d.",
+        "source": "infobiz.fina.hr (FINA)",
+        "company_number": "040001061",
+        "raw_id": 40001061,
+        "oib": "82023167977"
+      },
+      {
+        "input": "080245039",
+        "company": "Atlantic Grupa d.d.",
+        "source": "insolve.hr; registration document PDF on eho.zse.hr (Zagreb Stock Exchange)",
+        "company_number": "080245039",
+        "raw_id": 80245039,
+        "oib": "71149912416"
+      },
+      {
+        "input": "080002028",
+        "company": "Ericsson Nikola Tesla d.d.",
+        "source": "infobiz.fina.hr (FINA)",
+        "company_number": "080002028",
+        "raw_id": 80002028,
+        "oib": "84214771175"
+      },
+      {
+        "input": "080051022",
+        "company": "Croatia osiguranje d.d.",
+        "source": "provjera.hr (sudski registar mirror); infobiz.fina.hr",
+        "company_number": "080051022",
+        "raw_id": 80051022,
+        "oib": "26187994862"
+      },
+      {
+        "input": "040020834",
+        "company": "Plava laguna d.d.",
+        "source": "infobiz.fina.hr (FINA)",
+        "company_number": "040020834",
+        "raw_id": 40020834,
+        "oib": "57444289760"
+      },
+      {
+        "input": "080000014",
+        "company": "Zagrebacka banka d.d.",
+        "source": "zaba.hr/home/o-nama/oib-i-tin1 (the bank's own official OIB/TIN page)",
+        "company_number": "080000014",
+        "raw_id": 80000014,
+        "oib": "92963223473"
+      }
+    ],
+    "invalid": [
+      {
+        "input": "27759560626",
+        "reason": "bad_check_digit",
+        "note": "INA's OIB with the ISO 7064 check digit off by one (OIB checksum is gating)",
+        "id_type": "oib"
+      },
+      {
+        "input": "2775956062",
+        "reason": "wrong_length",
+        "note": "10-digit OIB, too short",
+        "id_type": "oib"
+      },
+      {
+        "input": "2775956062A",
+        "reason": "letters",
+        "note": "letter in place of a digit",
+        "id_type": "oib"
+      },
+      {
+        "input": "0800006",
+        "reason": "wrong_length",
+        "note": "7-digit MBS, too short",
+        "id_type": "mbs"
+      },
+      {
+        "input": "08000060A",
+        "reason": "letters",
+        "note": "letter in place of a digit",
+        "id_type": "mbs"
+      }
+    ],
+    "advisory": [
+      {
+        "input": "080000605",
+        "company_number": "080000605",
+        "id_type": "mbs",
+        "note": "INA's MBS with the ISO 7064 check digit flipped. About 10 legacy MBS in the real register have incorrect check digits (odvjetnik-strniscak.hr), so the MBS check digit is advisory: validate() still accepts a well-formed MBS, check_digit_status() reports advisory_bad."
+      }
+    ],
+    "normalization": [
+      {
+        "input": "080 000 604",
+        "company_number": "080000604"
+      },
+      {
+        "input": "80000604",
+        "company_number": "080000604",
+        "note": "leading zero dropped"
+      },
+      {
+        "input": "010006549",
+        "company_number": "010006549"
+      }
+    ],
+    "vat": [
+      {
+        "input": "HR27759560625",
+        "expected": "27759560625",
+        "note": "HR's VAT alias is HR+OIB, and OIB cannot be turned back into an MBS by arithmetic (they are assigned independently, by different authorities) -- so vat_to_company_number('HR', ...) returns the OIB itself, not INA's MBS-based company_number 080000604. A caller that needs the MBS for this company has to look it up, not derive it."
+      },
+      {
+        "input": "HR2775956062",
+        "expected": null,
+        "note": "10 digits, not an OIB"
+      },
+      {
+        "input": "HR２７７５９５６０６２５",
+        "expected": null,
+        "note": "the OIB 27759560625 written in fullwidth digits: ASCII 0-9 only"
+      }
+    ]
+  },
+  "DK": {
+    "valid": [
+      {
+        "input": "24256790",
+        "company": "Novo Nordisk A/S",
+        "source": "given / cross-checked (proff.dk, cvrapi.dk)",
+        "company_number": "24256790",
+        "raw_id": 24256790
+      },
+      {
+        "input": "22756214",
+        "company": "A.P. Moller - Maersk A/S",
+        "source": "Maersk half-year report PDF (investor.maersk.com, states 'CVR nr. 22756214'); proff.dk",
+        "company_number": "22756214",
+        "raw_id": 22756214
+      },
+      {
+        "input": "61126228",
+        "company": "Danske Bank A/S",
+        "source": "proff.dk / virmo.dk",
+        "company_number": "61126228",
+        "raw_id": 61126228
+      },
+      {
+        "input": "10403782",
+        "company": "Vestas Wind Systems A/S",
+        "source": "proff.dk / cvrapi.dk",
+        "company_number": "10403782",
+        "raw_id": 10403782
+      },
+      {
+        "input": "61056416",
+        "company": "Carlsberg A/S",
+        "source": "proff.dk / cvrapi.dk",
+        "company_number": "61056416",
+        "raw_id": 61056416
+      },
+      {
+        "input": "36213728",
+        "company": "Orsted A/S",
+        "source": "proff.dk / cvrapi.dk (formerly Dong Energy A/S, same CVR)",
+        "company_number": "36213728",
+        "raw_id": 36213728
+      },
+      {
+        "input": "69749917",
+        "company": "Coloplast A/S",
+        "source": "Coloplast articles-of-association PDF (coloplast.com, states 'CVR-nr. 69749917'); proff.dk",
+        "company_number": "69749917",
+        "raw_id": 69749917
+      },
+      {
+        "input": "58233528",
+        "company": "DSV A/S",
+        "source": "DSV investor-relations PDF (investor.dsv.com); proff.dk",
+        "company_number": "58233528",
+        "raw_id": 58233528
+      },
+      {
+        "input": "28505116",
+        "company": "Pandora A/S",
+        "source": "proff.dk / cvrapi.dk",
+        "company_number": "28505116",
+        "raw_id": 28505116
+      },
+      {
+        "input": "10007127",
+        "company": "Novozymes A/S",
+        "source": "proff.dk / cvrapi.dk",
+        "company_number": "10007127",
+        "raw_id": 10007127
+      },
+      {
+        "input": "54562519",
+        "company": "LEGO A/S",
+        "source": "proff.dk / cvrapi.dk",
+        "company_number": "54562519",
+        "raw_id": 54562519
+      }
+    ],
+    "invalid": [
+      {
+        "input": "2425679",
+        "reason": "wrong_length",
+        "note": "7 digits, too short"
+      },
+      {
+        "input": "242567900",
+        "reason": "wrong_length",
+        "note": "9 digits, too long"
+      },
+      {
+        "input": "2425679A",
+        "reason": "letters",
+        "note": "letter in place of a digit"
+      },
+      {
+        "input": "２４２５６７９０",
+        "reason": "non_ascii_digits",
+        "note": "Novo Nordisk's CVR written in fullwidth digits: the mod-11 arithmetic would pass, but a company_number is ASCII 0-9 only"
+      }
+    ],
+    "advisory": [
+      {
+        "input": "24256791",
+        "company_number": "24256791",
+        "note": "Novo Nordisk's CVR with the last digit flipped: mod-11 remainder 1 (not 0). DK's check digit is advisory only: validate() still accepts any well-formed 8-digit CVR, check_digit_status() reports advisory_bad."
+      }
+    ],
+    "normalization": [
+      {
+        "input": "2425 6790",
+        "company_number": "24256790"
+      },
+      {
+        "input": "24-25-67-90",
+        "company_number": "24256790"
+      }
+    ],
+    "vat": [
+      {
+        "input": "DK24256790",
+        "expected": "24256790"
+      },
+      {
+        "input": "DK 24256790",
+        "expected": "24256790"
+      },
+      {
+        "input": "DK2425679",
+        "expected": null,
+        "note": "7 digits, not a CVR"
+      }
+    ]
+  },
+  "EE": {
+    "valid": [
+      {
+        "input": "10060701",
+        "company": "Swedbank AS",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "10060701",
+        "raw_id": 10060701
+      },
+      {
+        "input": "10421629",
+        "company": "Eesti Energia AS",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "10421629",
+        "raw_id": 10421629
+      },
+      {
+        "input": "12417834",
+        "company": "Bolt Technology OÜ",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "12417834",
+        "raw_id": 12417834
+      },
+      {
+        "input": "11958539",
+        "company": "Pipedrive OÜ",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "11958539",
+        "raw_id": 11958539
+      },
+      {
+        "input": "74001073",
+        "company": "Tartu Ülikool",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "74001073",
+        "raw_id": 74001073
+      },
+      {
+        "input": "12919435",
+        "company": "Swedbank AB Eesti filiaal",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "12919435",
+        "raw_id": 12919435
+      },
+      {
+        "input": "80208720",
+        "company": "Eesti Evangeelne Luterlik Kirik",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "80208720",
+        "raw_id": 80208720
+      },
+      {
+        "input": "90000653",
+        "company": "sihtasutus Eesti Lastefond",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "90000653",
+        "raw_id": 90000653
+      },
+      {
+        "input": "11235172",
+        "company": "Usaldusühing DENIMAL",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "11235172",
+        "raw_id": 11235172
+      },
+      {
+        "input": "11089859",
+        "company": "Täisühing NARVA SORMEN",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "11089859",
+        "raw_id": 11089859
+      },
+      {
+        "input": "80034622",
+        "company": "Põhja-Pärnumaa vald, Pärnjõe küla, Sireli tee 10 korteriühistu",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "80034622",
+        "raw_id": 80034622
+      },
+      {
+        "input": "10338421",
+        "company": "Osaühing ACILIUS",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "10338421",
+        "raw_id": 10338421
+      },
+      {
+        "input": "10306409",
+        "company": "Aktsiaselts E-Profiil",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "10306409",
+        "raw_id": 10306409
+      },
+      {
+        "input": "14615768",
+        "company": "World View Consultants OÜ",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "14615768",
+        "raw_id": 14615768
+      },
+      {
+        "input": "75006173",
+        "company": "Kohtla-Järve Kesklinna Põhikool",
+        "source": "e-Business Register open data (RIK), golden/ee.json captured 2026-10-06",
+        "company_number": "75006173",
+        "raw_id": 75006173
+      }
+    ],
+    "invalid": [
+      {
+        "input": "10060702",
+        "reason": "bad_check_digit",
+        "note": "Swedbank AS with the last digit changed"
+      },
+      {
+        "input": "1006070",
+        "reason": "wrong_length",
+        "note": "7 digits"
+      },
+      {
+        "input": "100607011",
+        "reason": "wrong_length",
+        "note": "9 digits"
+      },
+      {
+        "input": "1006070A",
+        "reason": "non_digit",
+        "note": "a letter"
+      },
+      {
+        "input": "00000000",
+        "reason": "first_digit",
+        "note": "passes the arithmetic but 0 is not a register-area digit"
+      },
+      {
+        "input": "20000002",
+        "reason": "first_digit",
+        "note": "correct check digit, but the first digit must be 1, 7, 8 or 9"
+      },
+      {
+        "input": "EE100354546",
+        "reason": "kmkr_is_not_a_registry_code",
+        "note": "a VAT number (KMKR), not a registrikood"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "1006 0701",
+        "company_number": "10060701"
+      },
+      {
+        "input": " 10060701 ",
+        "company_number": "10060701"
+      }
+    ],
+    "vat": [
+      {
+        "input": "EE100354546",
+        "expected": null,
+        "note": "Swedbank AS's KMKR: separate from the registry code, never derived from it"
+      },
+      {
+        "input": "EE10060701",
+        "expected": null,
+        "note": "EE plus a registry code is not a KMKR (9 digits)"
+      }
+    ]
+  },
+  "SK": {
+    "valid": [
+      {
+        "input": "35763469",
+        "company": "Slovak Telekom, a.s.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "35763469",
+        "raw_id": 35763469
+      },
+      {
+        "input": "31322832",
+        "company": "SLOVNAFT, a.s.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "31322832",
+        "raw_id": 31322832
+      },
+      {
+        "input": "35757442",
+        "company": "VOLKSWAGEN SLOVAKIA, a.s.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "35757442",
+        "raw_id": 35757442
+      },
+      {
+        "input": "35790164",
+        "company": "Kaufland Slovenská republika v.o.s.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "35790164",
+        "raw_id": 35790164
+      },
+      {
+        "input": "36199222",
+        "company": "NIPPON STEEL SLOVAKIA s. r. o.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "36199222",
+        "raw_id": 36199222
+      },
+      {
+        "input": "46216171",
+        "company": "D4 BUILDING s.r.o.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "46216171",
+        "raw_id": 46216171
+      },
+      {
+        "input": "46914544",
+        "company": "FYTCHEM s. r. o. v likvidácii",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "46914544",
+        "raw_id": 46914544
+      },
+      {
+        "input": "35974249",
+        "company": "ASEK TZB, spol. s r.o.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "35974249",
+        "raw_id": 35974249
+      },
+      {
+        "input": "34139893",
+        "company": "ITC SLOVAKIA, s.r.o.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "34139893",
+        "raw_id": 34139893
+      },
+      {
+        "input": "45530441",
+        "company": "SOL ENERGY, k. s.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "45530441",
+        "raw_id": 45530441
+      },
+      {
+        "input": "46086757",
+        "company": "SODALITAS, družstvo",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "46086757",
+        "raw_id": 46086757
+      },
+      {
+        "input": "45739919",
+        "company": "NOVA, n.o. v likvidácii",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "45739919",
+        "raw_id": 45739919
+      },
+      {
+        "input": "36545198",
+        "company": "KLIMAK, j. s. a.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "36545198",
+        "raw_id": 36545198
+      },
+      {
+        "input": "57891052",
+        "company": "Perúnov kruh",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "57891052",
+        "raw_id": 57891052
+      },
+      {
+        "input": "31447724",
+        "company": "TECHNOPOL TRADING, spol. s r.o.",
+        "source": "RPO full export (exportDate 2026-10-03), golden/sk.json",
+        "company_number": "31447724",
+        "raw_id": 31447724
+      },
+      {
+        "input": "00151653",
+        "company": "Slovenska sporitelna, a.s.",
+        "source": "public register",
+        "company_number": "00151653",
+        "raw_id": 151653
+      },
+      {
+        "input": "00686930",
+        "company": "Tatra banka, a.s.",
+        "source": "public register",
+        "company_number": "00686930",
+        "raw_id": 686930
+      }
+    ],
+    "invalid": [
+      {
+        "input": "Neuvedené",
+        "reason": "not_an_ico",
+        "note": "the register's placeholder text, accents included"
+      },
+      {
+        "input": "12345",
+        "reason": "wrong_length",
+        "note": "5 digits"
+      },
+      {
+        "input": "357634690",
+        "reason": "wrong_length",
+        "note": "9 digits"
+      },
+      {
+        "input": "3576346A",
+        "reason": "non_digit",
+        "note": "a letter"
+      },
+      {
+        "input": "",
+        "reason": "empty",
+        "note": "nothing"
+      }
+    ],
+    "advisory": [
+      {
+        "input": "35763460",
+        "company_number": "35763460",
+        "note": "Slovak Telekom's IČO with the last digit changed: well-formed, so validate() still accepts it; check_digit_status() reports advisory_bad (the check digit is advisory, as for DK)."
+      },
+      {
+        "input": "00151650",
+        "company_number": "00151650",
+        "note": "Slovenska sporitelna's IČO with the last digit changed"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "35 763 469",
+        "company_number": "35763469"
+      },
+      {
+        "input": "151653",
+        "company_number": "00151653",
+        "note": "6 digits: a dropped leading zero pair"
+      },
+      {
+        "input": "686930",
+        "company_number": "00686930"
+      },
+      {
+        "input": "5757442",
+        "company_number": "05757442",
+        "note": "7 digits: one dropped zero"
+      }
+    ],
+    "vat": [
+      {
+        "input": "SK2020317068",
+        "expected": null,
+        "note": "a DIC/IC DPH is 10 digits and is not the IČO"
+      },
+      {
+        "input": "SK35763469",
+        "expected": null,
+        "note": "SK plus an IČO is not derivable VAT, never mapped"
+      }
+    ]
+  },
+  "CH": {
+    "valid": [
+      {
+        "input": "CHE103867266",
+        "company": "Novartis AG",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE103867266",
+        "raw_id": 103867266
+      },
+      {
+        "input": "CHE242294601",
+        "company": "Zazuko GmbH",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE242294601",
+        "raw_id": 242294601
+      },
+      {
+        "input": "CHE105829940",
+        "company": "Migros-Genossenschafts-Bund",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE105829940",
+        "raw_id": 105829940
+      },
+      {
+        "input": "CHE105934376",
+        "company": "Banque Cantonale Vaudoise",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE105934376",
+        "raw_id": 105934376
+      },
+      {
+        "input": "CHE110474423",
+        "company": "Google Switzerland GmbH",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE110474423",
+        "raw_id": 110474423
+      },
+      {
+        "input": "CHE482626484",
+        "company": "Barclays Bank (Suisse) SA, Zurich branch",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE482626484",
+        "raw_id": 482626484
+      },
+      {
+        "input": "CHE102739418",
+        "company": "Lonza Swiss Finance Ltd",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE102739418",
+        "raw_id": 102739418
+      },
+      {
+        "input": "CHE105773943",
+        "company": "Raiffeisenbank Aadorf Genossenschaft",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE105773943",
+        "raw_id": 105773943
+      },
+      {
+        "input": "CHE110126442",
+        "company": "Società Teleferica Costa-Calascio Sagl",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE110126442",
+        "raw_id": 110126442
+      },
+      {
+        "input": "CHE343737435",
+        "company": "Fondazione protezione-animali.ch",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE343737435",
+        "raw_id": 343737435
+      },
+      {
+        "input": "CHE112610602",
+        "company": "Associazione Svizzera di Football",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE112610602",
+        "raw_id": 112610602
+      },
+      {
+        "input": "CHE236167785",
+        "company": "Westschweizer BVG- und Stiftungsaufsichtsbehörde",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE236167785",
+        "raw_id": 236167785
+      },
+      {
+        "input": "CHE400250444",
+        "company": "Parkview AG, conseils d'organisation, financiers et stratégiques, succursale de Genève",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE400250444",
+        "raw_id": 400250444
+      },
+      {
+        "input": "CHE340225305",
+        "company": "BACCALÀ CLOWN DI PESSI E FASSARI",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE340225305",
+        "raw_id": 340225305
+      },
+      {
+        "input": "CHE359624914",
+        "company": "Carenini + Cie.",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE359624914",
+        "raw_id": 359624914
+      },
+      {
+        "input": "CHE142340525",
+        "company": "PREMIUM TRADERS LLP, Macclesfield (UK), Zweigniederlassung Zug",
+        "source": "Zefix on LINDAS, golden/ch.json captured 2026-10-06",
+        "company_number": "CHE142340525",
+        "raw_id": 142340525
+      },
+      {
+        "input": "CHE-100.991.993",
+        "company": "Hasbro SA",
+        "source": "public register",
+        "company_number": "CHE100991993",
+        "raw_id": 100991993
+      }
+    ],
+    "invalid": [
+      {
+        "input": "CHE242294602",
+        "reason": "bad_check_digit",
+        "note": "Zazuko GmbH with the last digit changed"
+      },
+      {
+        "input": "CHE-242.294.600",
+        "reason": "bad_check_digit",
+        "note": "formatted, last digit changed"
+      },
+      {
+        "input": "CHE-100.991.994",
+        "reason": "bad_check_digit",
+        "note": "Hasbro SA with the last digit changed"
+      },
+      {
+        "input": "CHE12345678",
+        "reason": "wrong_length",
+        "note": "8 digits"
+      },
+      {
+        "input": "CHE2422946010",
+        "reason": "wrong_length",
+        "note": "10 digits"
+      },
+      {
+        "input": "CHE000000000",
+        "reason": "all_zeros",
+        "note": "passes the arithmetic, is not a UID"
+      },
+      {
+        "input": "CHE100000160",
+        "reason": "check_value_10",
+        "note": "the weighted sum gives 10: no valid UID has this body"
+      },
+      {
+        "input": "242294601",
+        "reason": "missing_prefix",
+        "note": "digits without CHE"
+      },
+      {
+        "input": "CHE24229460A",
+        "reason": "non_digit",
+        "note": "a letter"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "CHE-242.294.601",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": "che242294601",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": "CHE-242.294.601 MWST",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": "CHE-242.294.601 TVA",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": "CHE-242.294.601 IVA",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": "CHE242294601HR",
+        "company_number": "CHE242294601"
+      },
+      {
+        "input": " che 242 294 601 vat ",
+        "company_number": "CHE242294601"
+      }
+    ],
+    "vat": [
+      {
+        "input": "CHE-242.294.601 MWST",
+        "expected": "CHE242294601"
+      },
+      {
+        "input": "CHE-242.294.601 TVA",
+        "expected": "CHE242294601"
+      },
+      {
+        "input": "CHE242294601IVA",
+        "expected": "CHE242294601"
+      },
+      {
+        "input": "DE242294601",
+        "expected": null,
+        "note": "another country prefix"
+      },
+      {
+        "input": "CHE-242.294.60 MWST",
+        "expected": null,
+        "note": "8 digits"
+      }
+    ]
+  },
+  "US": {
+    "valid": [
+      {
+        "input": "NY-4424185",
+        "company": "BUTCHY'S WINE & SPIRITS, INC.",
+        "source": "New York DOS active corporations open data (DOS ID 4424185), checked 2026-10-09",
+        "company_number": "NY-4424185",
+        "raw_id": 4424185
+      },
+      {
+        "input": "CO-20091096973",
+        "company": "(example in the launch plan)",
+        "source": "public register",
+        "company_number": "CO-20091096973",
+        "raw_id": 20091096973
+      },
+      {
+        "input": "CT-0292920",
+        "company": "(example in the launch plan)",
+        "source": "public register",
+        "company_number": "CT-0292920",
+        "raw_id": 292920
+      },
+      {
+        "input": "PA-0007065008",
+        "company": "(example in the launch plan)",
+        "source": "public register",
+        "company_number": "PA-0007065008",
+        "raw_id": 7065008
+      },
+      {
+        "input": "DE-10684990",
+        "company": "(example in the launch plan)",
+        "source": "public register",
+        "company_number": "DE-10684990",
+        "raw_id": 10684990
+      },
+      {
+        "input": "CIK-0000320193",
+        "company": "Apple Inc.",
+        "source": "SEC EDGAR company tickers (public CIK), cik-lookup",
+        "company_number": "CIK-0000320193",
+        "raw_id": 320193
+      },
+      {
+        "input": "CIK-0000789019",
+        "company": "Microsoft Corp",
+        "source": "SEC EDGAR company tickers (public CIK), cik-lookup",
+        "company_number": "CIK-0000789019",
+        "raw_id": 789019
+      },
+      {
+        "input": "CIK-0001018724",
+        "company": "Amazon.com Inc",
+        "source": "SEC EDGAR company tickers (public CIK), cik-lookup",
+        "company_number": "CIK-0001018724",
+        "raw_id": 1018724
+      },
+      {
+        "input": "CIK-0001318605",
+        "company": "Tesla, Inc.",
+        "source": "SEC EDGAR company tickers (public CIK), cik-lookup",
+        "company_number": "CIK-0001318605",
+        "raw_id": 1318605
+      },
+      {
+        "input": "CIK-0001045810",
+        "company": "NVIDIA Corp",
+        "source": "SEC EDGAR company tickers (public CIK), cik-lookup",
+        "company_number": "CIK-0001045810",
+        "raw_id": 1045810
+      },
+      {
+        "input": "LEI-HWUPKR0MPOU8FGXBT394",
+        "company": "Apple Inc.",
+        "source": "GLEIF LEI record (public)",
+        "company_number": "LEI-HWUPKR0MPOU8FGXBT394",
+        "raw_id": 8394
+      },
+      {
+        "input": "LEI-INR2EJN1ERAN0W5ZP974",
+        "company": "Microsoft Corporation",
+        "source": "GLEIF LEI record (public)",
+        "company_number": "LEI-INR2EJN1ERAN0W5ZP974",
+        "raw_id": 2105974
+      }
+    ],
+    "invalid": [
+      {
+        "input": "NY",
+        "reason": "no_number",
+        "note": "state without a register number"
+      },
+      {
+        "input": "4424185",
+        "reason": "missing_state",
+        "note": "digits only"
+      },
+      {
+        "input": "",
+        "reason": "empty",
+        "note": "empty string"
+      },
+      {
+        "input": "N-4424185",
+        "reason": "one_letter_state",
+        "note": "a state code is two letters"
+      },
+      {
+        "input": "NY-",
+        "reason": "no_number",
+        "note": "dash and nothing"
+      },
+      {
+        "input": "CIK-12345678901",
+        "reason": "cik_too_long",
+        "note": "11 digits"
+      },
+      {
+        "input": "CIK-",
+        "reason": "no_number",
+        "note": "CIK without digits"
+      },
+      {
+        "input": "LEI-HWUPKR0MPOU8FGXBT39",
+        "reason": "lei_wrong_length",
+        "note": "19 characters"
+      },
+      {
+        "input": "LEI-HWUPKR0MPOU8FGXBT3944",
+        "reason": "lei_wrong_length",
+        "note": "21 characters"
+      },
+      {
+        "input": "NY-44 24185",
+        "reason": "inner_space",
+        "note": "a space inside the register number"
+      },
+      {
+        "input": "NY-11111111111111111111111111111111111111111",
+        "reason": "too_long",
+        "note": "41 characters after the state"
+      },
+      {
+        "input": "CIK-ABC",
+        "reason": "cik_not_digits",
+        "note": "letters in a CIK"
+      }
+    ],
+    "normalization": [
+      {
+        "input": "ny 4424185",
+        "company_number": "NY-4424185"
+      },
+      {
+        "input": "NY4424185",
+        "company_number": "NY-4424185"
+      },
+      {
+        "input": "ny-4424185",
+        "company_number": "NY-4424185"
+      },
+      {
+        "input": " NY.4424185 ",
+        "company_number": "NY-4424185"
+      },
+      {
+        "input": "co20091096973",
+        "company_number": "CO-20091096973"
+      },
+      {
+        "input": "CIK 320193",
+        "company_number": "CIK-0000320193"
+      },
+      {
+        "input": "cik-320193",
+        "company_number": "CIK-0000320193"
+      },
+      {
+        "input": "CIK0000320193",
+        "company_number": "CIK-0000320193"
+      },
+      {
+        "input": "lei hwupkr0mpou8fgxbt394",
+        "company_number": "LEI-HWUPKR0MPOU8FGXBT394"
+      }
+    ],
+    "vat": [
+      {
+        "input": "US4424185",
+        "expected": null,
+        "note": "there is no US VAT number"
+      },
+      {
+        "input": "NY-4424185",
+        "expected": null,
+        "note": "a state number is not a VAT number"
+      },
+      {
+        "input": "DE10684990",
+        "expected": null,
+        "note": "another country prefix"
+      }
+    ]
+  }
+}

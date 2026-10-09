@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "company-id-validators"
+version = "0.1.0"
+description = "Offline validators for European company identifiers and EU VAT numbers: check digits and formats for ES, FR, GB, IE, PL, NO, FI, SE, BE, HR, DK, EE, SK, CH, US and LEI. Zero dependencies."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Prometiam" }]
+requires-python = ">=3.8"
+dependencies = []
+keywords = ["vat", "siren", "siret", "nif", "cif", "krs", "company number", "kyb", "validation", "check digit", "lei"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://www.prometiam.com/risk-api/docs?utm_source=pypi&utm_medium=readme&utm_campaign=company-id-validators"
+Repository = "https://github.com/matiasmaquieira96/company-id-validators"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/company_id_validators"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/company_id_validators", "README.md", "LICENSE", "pyproject.toml"]

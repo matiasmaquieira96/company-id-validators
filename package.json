@@ -1,0 +1,32 @@
+{
+  "name": "company-id-validators",
+  "version": "0.1.0",
+  "description": "Offline validators for European company identifiers and EU VAT numbers: check digits and formats for ES, FR, GB, IE, PL, NO, FI, SE, BE, HR, DK, EE, SK, CH, US and LEI. Zero dependencies.",
+  "license": "MIT",
+  "author": "Prometiam",
+  "homepage": "https://www.prometiam.com/risk-api/docs?utm_source=npm&utm_medium=readme&utm_campaign=company-id-validators",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matiasmaquieira96/company-id-validators.git"
+  },
+  "keywords": ["vat", "vat-number", "siren", "siret", "nif", "cif", "krs", "nip", "regon", "cvr", "company number", "company-id", "kyb", "validation", "validator", "check-digit", "lei", "eu", "europe"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": ["dist", "types", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test test/validators.test.mjs",
+    "prepublishOnly": "npm test"
+  }
+}
